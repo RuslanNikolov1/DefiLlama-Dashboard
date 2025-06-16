@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TVLChart from '../TVLChart';
 import { useTVLData } from '../../hooks/useTVLData';
+import { ThemeProvider } from '../../context/ThemeContext';
 
 // Mock the useTVLData hook
 jest.mock('../../hooks/useTVLData');
@@ -29,11 +30,13 @@ describe('TVLChart', () => {
 
     render(
       <QueryClientProvider client={queryClient}>
-        <TVLChart />
+        <ThemeProvider>
+          <TVLChart />
+        </ThemeProvider>
       </QueryClientProvider>
     );
 
-    expect(screen.getByText('Loading TVL data...')).toBeInTheDocument();
+    expect(screen.getByTestId('chart-skeleton')).toBeInTheDocument();
   });
 
   it('renders error state', () => {
@@ -45,7 +48,9 @@ describe('TVLChart', () => {
 
     render(
       <QueryClientProvider client={queryClient}>
-        <TVLChart />
+        <ThemeProvider>
+          <TVLChart />
+        </ThemeProvider>
       </QueryClientProvider>
     );
 
@@ -56,6 +61,7 @@ describe('TVLChart', () => {
     const mockData = [
       { date: 1609459200, totalLiquidityUSD: 1000000 },
       { date: 1609545600, totalLiquidityUSD: 1100000 },
+      { date: 1609632000, totalLiquidityUSD: 1200000 },
     ];
 
     (useTVLData as jest.Mock).mockReturnValue({
@@ -66,7 +72,9 @@ describe('TVLChart', () => {
 
     render(
       <QueryClientProvider client={queryClient}>
-        <TVLChart />
+        <ThemeProvider>
+          <TVLChart />
+        </ThemeProvider>
       </QueryClientProvider>
     );
 
@@ -74,7 +82,7 @@ describe('TVLChart', () => {
     expect(screen.getByText('Total Value Locked (TVL)')).toBeInTheDocument();
 
     // Check if filter select is rendered
-    const select = screen.getByRole('combobox');
+    const select = screen.getByTestId('filter-select');
     expect(select).toBeInTheDocument();
 
     // Test filter change

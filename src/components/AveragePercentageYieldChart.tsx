@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useAveragePercentageYield } from '../hooks/useAveragePercentageYield';
 import {
   ResponsiveContainer,
@@ -10,6 +10,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 import styles from './Chart.module.scss';
+import { ChartSkeleton } from './Skeletons';
 
 /**
  * Functional React component that renders a bar chart of average percentage yields.
@@ -22,23 +23,28 @@ import styles from './Chart.module.scss';
  * return <AveragePercentageYieldChart />;
  */
 
+interface RateData {
+  symbol: string;
+  percentage: number;
+}
+
 const AveragePercentageYieldChart: React.FC = () => {
   const { data, isLoading, error } = useAveragePercentageYield();
   const [filter, setFilter] = useState('');
 
-  if (isLoading) return <div>Loading AveragePercentageYieldChart data...</div>;
+  if (isLoading) return <ChartSkeleton />;
   if (error) return <div>Error loading AveragePercentageYieldChart data</div>;
 
-  const filteredData = data?.filter(rate =>
+  const filteredData = data?.filter((rate: RateData) =>
     rate.symbol.toLowerCase().includes(filter.toLowerCase())
-  ) ?? [];
+  );
 
   return (
     <div className={styles.chartContainer}>
       <h3>Average Percentage Yield</h3>
       <input
         type="text"
-        placeholder="Filter by symbol"
+        placeholder="Filter by symbol..."
         value={filter}
         onChange={e => setFilter(e.target.value)}
         className={styles.filterInput}
@@ -55,5 +61,6 @@ const AveragePercentageYieldChart: React.FC = () => {
     </div>
   );
 };
+
 export default AveragePercentageYieldChart;
 

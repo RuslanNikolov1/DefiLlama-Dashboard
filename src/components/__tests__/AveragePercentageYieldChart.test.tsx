@@ -33,7 +33,7 @@ describe('AveragePercentageYieldChart', () => {
       </QueryClientProvider>
     );
 
-    expect(screen.getByText('Loading AveragePercentageYieldChart data...')).toBeInTheDocument();
+    expect(screen.getByTestId('chart-skeleton')).toBeInTheDocument();
   });
 
   it('renders error state', () => {
@@ -75,7 +75,7 @@ describe('AveragePercentageYieldChart', () => {
     expect(screen.getByText('Average Percentage Yield')).toBeInTheDocument();
 
     // Check if filter input is rendered
-    const filterInput = screen.getByPlaceholderText('Filter by symbol');
+    const filterInput = screen.getByPlaceholderText('Filter by symbol...');
     expect(filterInput).toBeInTheDocument();
 
     // Test filtering

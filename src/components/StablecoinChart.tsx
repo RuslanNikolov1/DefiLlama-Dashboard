@@ -10,6 +10,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 import styles from './Chart.module.scss';
+import { ChartSkeleton } from './Skeletons';
 
 /**
  * React functional component that displays a line chart of stablecoin circulating supply over time.
@@ -34,7 +35,7 @@ const StablecoinChart: React.FC = () => {
     return data.filter(point => point.date * 1000 >= cutoff);
   }, [data, filterDays]);
 
-  if (isLoading) return <div>Loading stablecoin data...</div>;
+  if (isLoading) return <ChartSkeleton />;
   if (error) return <div>Error loading stablecoin data</div>;
 
   return (

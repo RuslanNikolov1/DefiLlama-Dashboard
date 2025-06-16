@@ -21,7 +21,6 @@ export const useTVLData = () => {
     queryKey: ['tvlData'],
     queryFn: async () => {
       const res = await axios.get('https://api.llama.fi/charts');
-      console.log('res', res);
       return res.data;
     },
   });

@@ -33,7 +33,7 @@ describe('StablecoinChart', () => {
       </QueryClientProvider>
     );
 
-    expect(screen.getByText('Loading stablecoin data...')).toBeInTheDocument();
+    expect(screen.getByTestId('chart-skeleton')).toBeInTheDocument();
   });
 
   it('renders error state', () => {
