@@ -41,7 +41,7 @@ const ProtocolsTable: React.FC = () => {
     if (!protocols) return [];
     return protocols.filter(p =>
       p.name.toLowerCase().includes(globalFilter.toLowerCase()) ||
-      p.chain.toLowerCase().includes(globalFilter.toLowerCase())
+      (p.chain || '').toLowerCase().includes(globalFilter.toLowerCase())
     );
   }, [protocols, globalFilter]);
 
