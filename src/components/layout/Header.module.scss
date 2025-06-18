@@ -1,0 +1,115 @@
+.header {
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: 'Inter', sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  text-decoration: none;
+  margin-right: 2rem;
+}
+
+.logoImg {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.nav a:hover {
+  background-color: var(--hover-color);
+}
+
+.nav a.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.username {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.signInButton,
+.signUpButton {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.signInButton {
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+
+  &:hover {
+    background-color: var(--primary-color-light);
+  }
+}
+
+.signUpButton {
+  background-color: var(--primary-color);
+  color: white;
+
+  &:hover {
+    background-color: var(--primary-color-dark);
+  }
+}
+
+.signOutButton {
+  padding: 0.5rem 1rem;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--error-color-dark);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--error-color-light);
+  }
+} 
