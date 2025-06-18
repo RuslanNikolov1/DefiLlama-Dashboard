@@ -9,7 +9,10 @@ export default defineConfig({
     strictPort: true,
     hmr: {
       overlay: false
-    }
+    },
+    proxy: {
+      '/api': 'http://localhost:3001',
+    },
   },
   build: {
     outDir: 'dist'

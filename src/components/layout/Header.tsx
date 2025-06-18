@@ -71,6 +71,14 @@ export const Header: React.FC = () => {
               >
                 💎 TVL Chart
               </NavLink>
+              <NavLink 
+                to="/news" 
+                className={({ isActive }) => isActive ? styles.active : ''}
+                role="menuitem"
+                aria-current={location.pathname === '/news' ? 'page' : undefined}
+              >
+                📰 DeFi News
+              </NavLink>
             </nav>
             <ThemeToggle />
             <div className={styles.authButtons}>

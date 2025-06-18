@@ -12,6 +12,8 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { Header } from './components/layout/Header';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
+const DeFiNews = React.lazy(() => import('./components/DeFiNews'));
+const NewsDetail = React.lazy(() => import('./components/NewsDetail'));
 
 // Lazy load components
 const ProtocolsTable = React.lazy(() => import('./components/ProtocolsTable'));
@@ -58,6 +60,16 @@ function App() {
                       <ProtocolsTable />
                     </Suspense>
                   </motion.div>
+                } />
+                <Route path="/news" element={
+                  <Suspense fallback={<div>Loading DeFi news...</div>}>
+                    <DeFiNews />
+                  </Suspense>
+                } />
+                <Route path="/news/:id" element={
+                  <Suspense fallback={<div>Loading news detail...</div>}>
+                    <NewsDetail />
+                  </Suspense>
                 } />
                 <Route path="/stablecoins" element={
                   <motion.div
