@@ -33,11 +33,13 @@ describe('Header', () => {
 
   it('renders navigation and username when authenticated', () => {
     render(<Header />);
-    expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
-    expect(screen.getByText(/stablecoins/i)).toBeInTheDocument();
-    expect(screen.getByText(/percentage yield/i)).toBeInTheDocument();
-    expect(screen.getByText(/tvl chart/i)).toBeInTheDocument();
-    expect(screen.getByText(/defi news/i)).toBeInTheDocument();
+    const menuitems = screen.getAllByRole('menuitem');
+    expect(menuitems.some(item => /coins/i.test(item.textContent || ''))).toBe(true);
+    expect(menuitems.some(item => /protocols/i.test(item.textContent || ''))).toBe(true);
+    expect(menuitems.some(item => /stablecoins/i.test(item.textContent || ''))).toBe(true);
+    expect(menuitems.some(item => /percentage yield/i.test(item.textContent || ''))).toBe(true);
+    expect(menuitems.some(item => /tvl chart/i.test(item.textContent || ''))).toBe(true);
+    expect(menuitems.some(item => /defi news/i.test(item.textContent || ''))).toBe(true);
     expect(screen.getByText('alice')).toBeInTheDocument();
   });
 

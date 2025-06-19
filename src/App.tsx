@@ -20,6 +20,7 @@ const ProtocolsTable = React.lazy(() => import('./components/ProtocolsTable/Prot
 const TVLChart = React.lazy(() => import('./components/TVLChart/TVLChart'));
 const StablecoinChart = React.lazy(() => import('./components/StablecoinChart/StablecoinChart'));
 const AveragePercentageYieldChart = React.lazy(() => import('./components/AveragePercentageYieldChart/AveragePercentageYieldChart'));
+const CoinsTable = React.lazy(() => import('./components/CoinsTable/CoinsTable'));
 
 /**
  * Root component that defines the layout and routing of the DeFiLlama Dashboard.
@@ -55,9 +56,24 @@ function App() {
                     role="region"
                     aria-label="Dashboard content"
                   >
-                    <h1>DeFi Dashboard</h1>
+                    <h1>Protocols</h1>
                     <Suspense fallback={<TableSkeleton />}>
                       <ProtocolsTable />
+                    </Suspense>
+                  </motion.div>
+                } />
+                <Route path="/coins" element={
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    role="region"
+                    aria-label="Coins table"
+                  >
+                    <h1>Coins</h1>
+                    <Suspense fallback={<TableSkeleton />}>
+                      <CoinsTable />
                     </Suspense>
                   </motion.div>
                 } />

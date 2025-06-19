@@ -5,15 +5,48 @@
   top: 0;
   z-index: 100;
   font-family: 'Inter', sans-serif;
+  width: 100%;
+  left: 0;
+  right: 0;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  justify-content: flex-start;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1 1 0;
+  gap: 1rem;
 }
 
 .logo {

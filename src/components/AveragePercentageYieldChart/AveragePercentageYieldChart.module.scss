@@ -1,0 +1,39 @@
+.chartContainer {
+  background: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  color: var(--text-color);
+  box-shadow: 0 0 12px var(--shadow-color);
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.chartContainer h3 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.filterInput {
+  width: fit-content;
+  align-self: flex-end;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--input-background);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
+} 
