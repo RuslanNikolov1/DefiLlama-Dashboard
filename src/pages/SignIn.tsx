@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { SignInForm } from '../components/auth/SignInForm';
+import { SignInForm } from '../components/auth/SignInForm/SignInForm';
 import { useAuth } from '../context/AuthContext';
 import styles from './Auth.module.scss';
 

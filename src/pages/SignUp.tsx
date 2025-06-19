@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { SignUpForm } from '../components/auth/SignUpForm';
+import { SignUpForm } from '../components/auth/SignUpForm/SignUpForm';
 import { useAuth } from '../context/AuthContext';
 import styles from './Auth.module.scss';
 

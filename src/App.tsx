@@ -1,25 +1,25 @@
 import React, { Suspense } from 'react';
 import { Routes, Route, NavLink, useLocation, BrowserRouter as Router, Navigate } from 'react-router-dom';
 import styles from './App.module.scss';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 import { AnimatePresence, motion } from 'framer-motion';
-import { TableSkeleton } from './components/Skeletons';
+import { TableSkeleton } from './components/Skeletons/Skeletons';
 import { ThemeProvider } from './context/ThemeContext';
-import ThemeToggle from './components/ThemeToggle';
+import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import './styles/themes.scss';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { ProtectedRoute } from './components/auth/ProtectedRoute';
-import { Header } from './components/layout/Header';
+import { ProtectedRoute } from './components/auth/ProtectedRoute/ProtectedRoute';
+import { Header } from './components/layout/Header/Header';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
-const DeFiNews = React.lazy(() => import('./components/DeFiNews'));
-const NewsDetail = React.lazy(() => import('./components/NewsDetail'));
+const DeFiNews = React.lazy(() => import('./components/DeFiNews/DeFiNews'));
+const NewsDetail = React.lazy(() => import('./components/NewsDetail/NewsDetail'));
 
 // Lazy load components
-const ProtocolsTable = React.lazy(() => import('./components/ProtocolsTable'));
-const TVLChart = React.lazy(() => import('./components/TVLChart'));
-const StablecoinChart = React.lazy(() => import('./components/StablecoinChart'));
-const AveragePercentageYieldChart = React.lazy(() => import('./components/AveragePercentageYieldChart'));
+const ProtocolsTable = React.lazy(() => import('./components/ProtocolsTable/ProtocolsTable'));
+const TVLChart = React.lazy(() => import('./components/TVLChart/TVLChart'));
+const StablecoinChart = React.lazy(() => import('./components/StablecoinChart/StablecoinChart'));
+const AveragePercentageYieldChart = React.lazy(() => import('./components/AveragePercentageYieldChart/AveragePercentageYieldChart'));
 
 /**
  * Root component that defines the layout and routing of the DeFiLlama Dashboard.

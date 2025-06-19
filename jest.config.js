@@ -12,7 +12,10 @@ export default {
       tsconfig: 'tsconfig.json',
     }],
   },
-  testMatch: ['**/__tests__/**/*.test.(ts|tsx)'],
+  testMatch: [
+    '**/__tests__/**/*.test.(ts|tsx)',
+    '**/?(*.)+(test).[jt]s?(x)'
+  ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   globals: {
     'ts-jest': {
