@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, within } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import CoinsTable from './CoinsTable';
 
 jest.mock('../../hooks/useCoins', () => ({
@@ -40,19 +41,19 @@ describe('CoinsTable', () => {
 
   it('renders loading state', () => {
     require('../../hooks/useCoins').useCoins.mockReturnValue({ isLoading: true });
-    render(<CoinsTable />);
+    render(<MemoryRouter><CoinsTable /></MemoryRouter>);
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
   });
 
   it('renders error state', () => {
     require('../../hooks/useCoins').useCoins.mockReturnValue({ isLoading: false, error: true });
-    render(<CoinsTable />);
+    render(<MemoryRouter><CoinsTable /></MemoryRouter>);
     expect(screen.getByText(/error loading coins/i)).toBeInTheDocument();
   });
 
   it('renders table with coins', () => {
     require('../../hooks/useCoins').useCoins.mockReturnValue({ isLoading: false, error: false, data: mockCoins });
-    render(<CoinsTable />);
+    render(<MemoryRouter><CoinsTable /></MemoryRouter>);
     expect(screen.getByPlaceholderText(/filter by name or symbol/i)).toBeInTheDocument();
     expect(screen.getByText(/bitcoin/i)).toBeInTheDocument();
     expect(screen.getByText(/ethereum/i)).toBeInTheDocument();
@@ -67,7 +68,7 @@ describe('CoinsTable', () => {
 
   it('filters coins by name or symbol', () => {
     require('../../hooks/useCoins').useCoins.mockReturnValue({ isLoading: false, error: false, data: mockCoins });
-    render(<CoinsTable />);
+    render(<MemoryRouter><CoinsTable /></MemoryRouter>);
     const input = screen.getByPlaceholderText(/filter by name or symbol/i);
     fireEvent.change(input, { target: { value: 'bit' } });
     expect(screen.getByText(/bitcoin/i)).toBeInTheDocument();
@@ -79,7 +80,7 @@ describe('CoinsTable', () => {
 
   it('sorts by column when header is clicked', () => {
     require('../../hooks/useCoins').useCoins.mockReturnValue({ isLoading: false, error: false, data: mockCoins });
-    render(<CoinsTable />);
+    render(<MemoryRouter><CoinsTable /></MemoryRouter>);
     // Find the Name header and click it
     const nameHeader = screen.getByRole('columnheader', { name: /name/i });
     fireEvent.click(nameHeader);
@@ -102,7 +103,7 @@ describe('CoinsTable', () => {
       symbol: `c${i}`,
     }));
     require('../../hooks/useCoins').useCoins.mockReturnValue({ isLoading: false, error: false, data: manyCoins });
-    render(<CoinsTable />);
+    render(<MemoryRouter><CoinsTable /></MemoryRouter>);
     // Should show page 1 of 2
     expect(screen.getByText(/page 1 of 2/i)).toBeInTheDocument();
     // Click next page

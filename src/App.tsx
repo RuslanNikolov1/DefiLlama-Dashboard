@@ -12,6 +12,8 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute/ProtectedRoute'
 import { Header } from './components/layout/Header/Header';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
+import CoinsTable from './components/CoinsTable/CoinsTable';
+import CoinDetailPage from './components/CoinsTable/CoinDetailPage';
 const DeFiNews = React.lazy(() => import('./components/DeFiNews/DeFiNews'));
 const NewsDetail = React.lazy(() => import('./components/NewsDetail/NewsDetail'));
 
@@ -20,7 +22,6 @@ const ProtocolsTable = React.lazy(() => import('./components/ProtocolsTable/Prot
 const TVLChart = React.lazy(() => import('./components/TVLChart/TVLChart'));
 const StablecoinChart = React.lazy(() => import('./components/StablecoinChart/StablecoinChart'));
 const AveragePercentageYieldChart = React.lazy(() => import('./components/AveragePercentageYieldChart/AveragePercentageYieldChart'));
-const CoinsTable = React.lazy(() => import('./components/CoinsTable/CoinsTable'));
 
 /**
  * Root component that defines the layout and routing of the DeFiLlama Dashboard.
@@ -77,6 +78,7 @@ function App() {
                     </Suspense>
                   </motion.div>
                 } />
+                <Route path="/coin/:id" element={<CoinDetailPage />} />
                 <Route path="/news" element={
                   <Suspense fallback={<div>Loading DeFi news...</div>}>
                     <DeFiNews />

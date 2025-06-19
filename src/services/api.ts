@@ -1,6 +1,18 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+function getApiUrl() {
+  if (typeof process !== 'undefined' && process.env && process.env.JEST_WORKER_ID) {
+    return process.env.VITE_API_URL || 'http://localhost:3001/api';
+  } else {
+    try {
+      // @ts-ignore
+      return new Function('return import.meta.env.VITE_API_URL')() || 'http://localhost:3001/api';
+    } catch {
+      return 'http://localhost:3001/api';
+    }
+  }
+}
+const API_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: API_URL,

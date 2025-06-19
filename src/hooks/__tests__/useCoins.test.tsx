@@ -16,6 +16,10 @@ const createWrapper = () => {
   };
 };
 
+beforeAll(() => {
+  process.env.VITE_COINGECKO_API_KEY = 'test-key';
+});
+
 describe('useCoins', () => {
   afterEach(() => {
     jest.resetAllMocks();

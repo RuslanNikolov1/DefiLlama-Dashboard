@@ -10,12 +10,14 @@ import {
   SortingState,
 } from '@tanstack/react-table';
 import styles from './CoinsTable.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const CoinsTable: React.FC = () => {
   const { data: coins, isLoading, error } = useCoins();
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 15 });
+  const navigate = useNavigate();
 
   const columns = useMemo<ColumnDef<any>[]>(() => [
     {
@@ -105,7 +107,7 @@ const CoinsTable: React.FC = () => {
         </thead>
         <tbody>
           {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
+            <tr key={row.id} onClick={() => navigate(`/coin/${row.original.id}`)} style={{ cursor: 'pointer' }}>
               {row.getVisibleCells().map(cell => (
                 <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
               ))}
