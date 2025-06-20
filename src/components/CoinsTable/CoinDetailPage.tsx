@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import styles from './CoinDetailPage.module.scss';
 
 interface Coin {
   id: string;
@@ -197,28 +198,30 @@ const CoinDetailPage: React.FC = () => {
       {/* Exchanges & Markets */}
       <div>
         <h3>Where to Buy</h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr>
-              <th style={{ textAlign: 'left', padding: 8 }}>Exchange</th>
-              <th style={{ textAlign: 'left', padding: 8 }}>Pair</th>
-              <th style={{ textAlign: 'left', padding: 8 }}>Price</th>
-              <th style={{ textAlign: 'left', padding: 8 }}>Volume (24h)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {markets.slice(0, 10).map((m, i) => (
-              <tr key={i}>
-                <td style={{ padding: 8 }}>
-                  {m.market.name} {m.market.logo && <img src={m.market.logo} alt={m.market.name} style={{ width: 18, height: 18, verticalAlign: 'middle', marginLeft: 4 }} />}
-                </td>
-                <td style={{ padding: 8 }}>{m.base}/{m.target}</td>
-                <td style={{ padding: 8 }}>${m.last.toLocaleString()}</td>
-                <td style={{ padding: 8 }}>${m.converted_volume?.usd?.toLocaleString() || 'N/A'}</td>
+        <div className={styles.whereToBuyTableWrapper}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: 'left', padding: 8 }}>Exchange</th>
+                <th style={{ textAlign: 'left', padding: 8 }}>Pair</th>
+                <th style={{ textAlign: 'left', padding: 8 }}>Price</th>
+                <th style={{ textAlign: 'left', padding: 8 }}>Volume (24h)</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {markets.slice(0, 10).map((m, i) => (
+                <tr key={i}>
+                  <td style={{ padding: 8 }}>
+                    {m.market.name} {m.market.logo && <img src={m.market.logo} alt={m.market.name} style={{ width: 18, height: 18, verticalAlign: 'middle', marginLeft: 4 }} />}
+                  </td>
+                  <td style={{ padding: 8 }}>{m.base}/{m.target}</td>
+                  <td style={{ padding: 8 }}>${m.last.toLocaleString()}</td>
+                  <td style={{ padding: 8 }}>${m.converted_volume?.usd?.toLocaleString() || 'N/A'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

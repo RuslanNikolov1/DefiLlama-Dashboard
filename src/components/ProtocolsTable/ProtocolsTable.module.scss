@@ -99,3 +99,37 @@
     border-radius: 4px;
   }
 }
+
+@media (max-width: 900px) {
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .table th, .table td {
+    min-width: 120px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0.5rem;
+  }
+  .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    font-size: 0.9rem;
+  }
+  .table th, .table td {
+    min-width: 100px;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  .pagination {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

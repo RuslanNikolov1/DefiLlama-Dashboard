@@ -145,4 +145,125 @@
     outline: none;
     box-shadow: 0 0 0 2px var(--error-color-light);
   }
+}
+
+.hamburger {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .left {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 20;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    margin: 4px 0;
+    background: var(--text-color);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .nav {
+    display: none;
+  }
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--background-color);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 0 0 1rem 1rem;
+    padding: 0.5rem 0;
+  }
+  .mobileMenu a {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    background: none;
+    border-radius: 0;
+    transition: background 0.2s;
+  }
+  .mobileMenu a:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 1rem;
+  }
+  .nav {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+  }
+  .left {
+    display: none
+  }
+  .center {
+    position: static;
+    transform: none;
+    display: none;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    justify-content: flex-start;
+  }
+  .right {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--background-color);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 0 0 1rem 1rem;
+    padding: 0.5rem 0;
+  }
+  .mobileMenu a {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    background: none;
+    border-radius: 0;
+    transition: background 0.2s;
+  }
+  .mobileMenu a:last-child {
+    border-bottom: none;
+  }
+  .logo, .logoImg {
+    display: none;
+  }
 } 

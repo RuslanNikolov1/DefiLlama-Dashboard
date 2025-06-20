@@ -24,4 +24,22 @@
     color: var(--primary-color-dark);
     text-decoration: underline;
   }
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 0.5rem;
+    min-height: unset;
+  }
+  .switch {
+    font-size: 0.95rem;
+  }
+  .link {
+    font-size: 1rem;
+  }
 } 

@@ -22,3 +22,16 @@
     border-color: var(--primary-color);
   }
 }
+
+@media (max-width: 900px) {
+  .chartContainer {
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+  }
+}
+@media (max-width: 600px) {
+  .chartContainer {
+    padding: 0.25rem;
+    margin: 0.25rem 0;
+  }
+}

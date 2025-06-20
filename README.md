@@ -1,11 +1,12 @@
 # DeFiLlama Dashboard
 
-A modern, full-featured DeFi dashboard built with React, Vite, TypeScript, and SCSS Modules. It fetches data from the DeFiLlama API and displays it using interactive tables and charts. Includes user authentication, news, theming, and more.
+A modern, full-featured DeFi dashboard built with React, Vite, TypeScript, and SCSS Modules. It fetches data from the DeFiLlama API and displays it using interactive tables and charts. Includes user authentication, news, theming, and more. **Fully mobile-friendly and responsive design.**
 
 ---
 
 ## ✨ Features
 
+- **Mobile-Friendly & Responsive**: Works seamlessly on mobile, tablet, and desktop devices with adaptive layouts and touch-friendly UI.
 - **User Authentication**: Sign up, sign in, and protected routes for secure access to features.
 - **DeFi Coins Table**: View, sort, and filter DeFi coins with detailed pages for each coin.
 - **Protocols Table**: Explore DeFi protocols with sortable/filterable tables and protocol details.
@@ -15,7 +16,6 @@ A modern, full-featured DeFi dashboard built with React, Vite, TypeScript, and S
   - Average Percentage Yield (APY) chart
 - **DeFi News Feed**: Stay updated with the latest DeFi news, with detailed news pages.
 - **Theming**: Toggle between light and dark mode for a personalized experience.
-- **Responsive Layout**: Works great on desktop and mobile.
 - **Navigation**: Modern navbar and header for easy access to all features.
 - **Error Handling**: User-friendly error messages and loading skeletons for smooth UX.
 - **Testing**: Comprehensive unit and integration tests with high coverage.

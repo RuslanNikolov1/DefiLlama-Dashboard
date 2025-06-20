@@ -8,6 +8,9 @@
   --input-background: #2a2a3d;
   --card-background: #1e1e2f;
   --shadow-color: rgba(0, 0, 0, 0.4);
+  --error-color: #ef4444;
+  --error-color-dark: #b91c1c;
+  --error-color-light: #fca5a5;
 }
 
 :root[data-theme="light"] {
@@ -20,6 +23,9 @@
   --input-background: #ffffff;
   --card-background: #ffffff;
   --shadow-color: rgba(0, 0, 0, 0.05);
+  --error-color: #1e293b;
+  --error-color-dark: #0f172a;
+  --error-color-light: #cbd5e1;
 }
 
 body {

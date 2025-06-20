@@ -37,4 +37,26 @@
   color: var(--text-color-secondary, #888);
   font-size: 1rem;
   margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .container {
+    max-width: 100%;
+    padding: 1rem 1.5rem;
+  }
+  .title {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 0.5rem 0.5rem;
+    margin: 1rem 0;
+  }
+  .title {
+    font-size: 1.1rem;
+  }
+  .description {
+    font-size: 1rem;
+  }
 } 

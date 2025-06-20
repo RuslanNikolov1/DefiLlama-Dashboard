@@ -72,4 +72,28 @@
   font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
   margin-right: 0.25rem;
+}
+
+@media (max-width: 900px) {
+  .heading {
+    font-size: 1.5rem;
+  }
+  .newsItem {
+    padding: 1rem 0 0.75rem 0;
+  }
+}
+@media (max-width: 600px) {
+  .heading {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .newsItem {
+    padding: 0.5rem 0 0.5rem 0;
+  }
+  .newsTitle {
+    font-size: 1rem;
+  }
+  .newsDesc {
+    font-size: 0.95rem;
+  }
 } 
