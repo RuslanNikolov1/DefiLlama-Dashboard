@@ -76,7 +76,9 @@ function App() {
                     {showOnboarding && (
                       <>
                         <div className={styles.onboardingMessage}>
-                          You can click on a coin and see more about it!
+                          <span className={styles.typewriter}>
+                            You can click on a coin and see more about it.
+                          </span>
                         </div>
                         <div className={styles.onboardingArrow}></div>
                       </>
