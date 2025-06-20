@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Routes, Route, NavLink, useLocation, BrowserRouter as Router, Navigate } from 'react-router-dom';
 import styles from './App.module.scss';
 import Footer from './components/Footer/Footer';
@@ -29,6 +29,22 @@ const AveragePercentageYieldChart = React.lazy(() => import('./components/Averag
  */
 function App() {
   const { user, loading } = useAuth();
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (user && location.pathname === '/') {
+      const seen = localStorage.getItem('seenOnboardingCoins');
+      if (seen !== 'true') {
+        setShowOnboarding(true);
+        localStorage.setItem('seenOnboardingCoins', 'true');
+      } else {
+        setShowOnboarding(false);
+      }
+    } else {
+      setShowOnboarding(false);
+    }
+  }, [user, location]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -55,26 +71,34 @@ function App() {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4 }}
                     role="region"
-                    aria-label="Dashboard content"
+                    aria-label="Coins table"
                   >
-                    <h1>Protocols</h1>
+                    {showOnboarding && (
+                      <>
+                        <div className={styles.onboardingMessage}>
+                          You can click on a coin and see more about it!
+                        </div>
+                        <div className={styles.onboardingArrow}></div>
+                      </>
+                    )}
+                    <h1>Coins</h1>
                     <Suspense fallback={<TableSkeleton />}>
-                      <ProtocolsTable />
+                      <CoinsTable />
                     </Suspense>
                   </motion.div>
                 } />
-                <Route path="/coins" element={
+                <Route path="/protocols" element={
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4 }}
                     role="region"
-                    aria-label="Coins table"
+                    aria-label="Protocols table"
                   >
-                    <h1>Coins</h1>
+                    <h1>Protocols</h1>
                     <Suspense fallback={<TableSkeleton />}>
-                      <CoinsTable />
+                      <ProtocolsTable />
                     </Suspense>
                   </motion.div>
                 } />

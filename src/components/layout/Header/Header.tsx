@@ -56,19 +56,19 @@ export const Header: React.FC = () => {
             <div className={styles.center}>
               <nav className={styles.nav} role="navigation" aria-label="Main navigation">
                 <NavLink
-                  to="/coins"
-                  className={({ isActive }) => isActive ? styles.active : ''}
-                  role="menuitem"
-                  aria-current={location.pathname === '/coins' ? 'page' : undefined}
-                >
-                  💸 Coins
-                </NavLink>
-                <NavLink
                   to="/"
                   end
                   className={({ isActive }) => isActive ? styles.active : ''}
                   role="menuitem"
                   aria-current={location.pathname === '/' ? 'page' : undefined}
+                >
+                  💸 Coins
+                </NavLink>
+                <NavLink
+                  to="/protocols"
+                  className={({ isActive }) => isActive ? styles.active : ''}
+                  role="menuitem"
+                  aria-current={location.pathname === '/protocols' ? 'page' : undefined}
                 >
                   📊 Protocols
                 </NavLink>
@@ -118,8 +118,8 @@ export const Header: React.FC = () => {
             {/* Mobile menu */}
             {mobileMenuOpen && (
               <nav id="mobile-menu" className={styles.mobileMenu} role="navigation" aria-label="Mobile navigation">
-                <NavLink to="/coins" onClick={closeMobileMenu}>💸 Coins</NavLink>
-                <NavLink to="/" end onClick={closeMobileMenu}>📊 Protocols</NavLink>
+                <NavLink to="/" end onClick={closeMobileMenu}>💸 Coins</NavLink>
+                <NavLink to="/protocols" onClick={closeMobileMenu}>📊 Protocols</NavLink>
                 <NavLink to="/stablecoins" onClick={closeMobileMenu}>💰 Stablecoins</NavLink>
                 <NavLink to="/percentage-yield" onClick={closeMobileMenu}>📈 Percentage Yield</NavLink>
                 <NavLink to="/tvl" onClick={closeMobileMenu}>💎 TVL Chart</NavLink>

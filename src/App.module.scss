@@ -54,4 +54,51 @@
     margin-bottom: 1rem;
   }
 }
+
+.onboardingMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  width: auto;
+  max-width: 220px;
+  height: 56px;
+  padding: 0 2rem;
+  margin: 0 auto 0.5rem auto;
+  border-radius: 32px;
+  font-size: 0.98rem;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+  transition: background 0.3s, color 0.3s;
+}
+
+:root[data-theme="dark"] .onboardingMessage {
+  background: #fff;
+  color: #222;
+}
+:root[data-theme="light"] .onboardingMessage {
+  background: #222;
+  color: #fff;
+}
+
+.onboardingArrow {
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 14px solid;
+  margin: 0 auto;
+  position: relative;
+  top: 0.25rem;
+}
+:root[data-theme="dark"] .onboardingArrow {
+  border-top-color: #fff;
+}
+:root[data-theme="light"] .onboardingArrow {
+  border-top-color: #222;
+}
   

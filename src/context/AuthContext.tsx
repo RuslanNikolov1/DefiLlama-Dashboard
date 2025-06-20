@@ -78,6 +78,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error('Sign out error:', err);
     } finally {
       localStorage.removeItem('auth_token');
+      localStorage.setItem('seenOnboardingCoins', 'false');
       setUser(null);
     }
   };
