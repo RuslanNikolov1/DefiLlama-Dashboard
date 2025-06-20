@@ -6,6 +6,7 @@ import {
   verifyToken,
   signOut
 } from '../controllers/authController';
+import type { AuthRequest } from '../controllers/authController';
 import { protect } from '../middleware/auth';
 
 const router = express.Router();
@@ -30,7 +31,7 @@ const signInValidation = [
 // Routes
 router.post('/signup', signUpValidation, signUp);
 router.post('/signin', signInValidation, signIn);
-router.get('/verify', protect, verifyToken);
+router.get('/verify', protect, (req, res) => verifyToken(req as AuthRequest, res));
 router.post('/signout', protect, signOut);
 
 export default router; 

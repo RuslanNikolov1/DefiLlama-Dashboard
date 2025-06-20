@@ -3,14 +3,21 @@ import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
 import User from '../models/User';
 import bcrypt from 'bcryptjs';
+import { IUser } from '../models/User';
+import { StringValue } from 'ms';
+import { Secret } from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+export interface AuthRequest extends Request {
+  user?: IUser;
+}
+
+const JWT_SECRET: Secret = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_EXPIRES_IN: StringValue = (process.env.JWT_EXPIRES_IN as StringValue) || '7d';
 
 // Helper function to generate JWT token
 const generateToken = (userId: string) => {
   return jwt.sign({ id: userId }, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN,
+    expiresIn: JWT_EXPIRES_IN as StringValue,
   });
 };
 
@@ -43,7 +50,7 @@ export const signUp = async (req: Request, res: Response) => {
     await user.save();
 
     // Generate JWT token
-    const token = generateToken(user._id);
+    const token = generateToken(user._id.toString());
 
     res.status(201).json({
       token,
@@ -84,7 +91,7 @@ export const signIn = async (req: Request, res: Response) => {
     }
 
     // Generate JWT token
-    const token = generateToken(user._id);
+    const token = generateToken(user._id.toString());
 
     res.json({
       token,
@@ -103,13 +110,15 @@ export const signIn = async (req: Request, res: Response) => {
 // @desc    Get current user
 // @route   GET /api/auth/verify
 // @access  Private
-export const verifyToken = async (req: Request, res: Response) => {
+export const verifyToken = async (req: AuthRequest, res: Response) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
     const user = await User.findById(req.user.id).select('-password');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
     res.json({
       user: {
         id: user._id,

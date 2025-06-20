@@ -1,5 +1,6 @@
 import express from 'express';
 import axios from 'axios';
+import type { AxiosError } from 'axios';
 import Comment from '../models/Comment';
 import { protect } from '../middleware/auth';
 import { Request } from 'express';
@@ -11,10 +12,14 @@ router.get('/defi-news', async (req, res) => {
   try {
     const response = await axios.get('https://min-api.cryptocompare.com/data/v2/news/');
     // CryptoCompare returns { Data: [...] }
-    res.json({ results: response.data.Data || [] });
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('CryptoCompare API error:', error.response?.data || error.message);
+    const data = (response.data as { Data?: any[] });
+    res.json({ results: data.Data || [] });
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'isAxiosError' in error) {
+      const axiosErr = error as AxiosError;
+      console.error('CryptoCompare API error:', axiosErr.response?.data || axiosErr.message);
+    } else if (error instanceof Error) {
+      console.error('CryptoCompare API error:', error.message);
     } else {
       console.error('CryptoCompare API error:', error);
     }
