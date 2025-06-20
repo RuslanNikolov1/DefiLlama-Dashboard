@@ -1,16 +1,7 @@
 import axios from 'axios';
 
 function getApiUrl() {
-  if (typeof process !== 'undefined' && process.env && process.env.JEST_WORKER_ID) {
-    return process.env.VITE_API_URL || 'http://localhost:3001/api';
-  } else {
-    try {
-      // @ts-ignore
-      return new Function('return import.meta.env.VITE_API_URL')() || 'http://localhost:3001/api';
-    } catch {
-      return 'http://localhost:3001/api';
-    }
-  }
+  return import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 }
 const API_URL = getApiUrl();
 
