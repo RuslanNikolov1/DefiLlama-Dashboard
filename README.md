@@ -98,7 +98,7 @@ A live version of the frontend is deployed on Vercel:
 
 - **URL:** [https://defi-llama-dashboard-7yazyuxmq-ruslan-nikolovs-projects.vercel.app/](https://defi-llama-dashboard-7yazyuxmq-ruslan-nikolovs-projects.vercel.app/)
 
-> **Note:** The live deployment may have some styling issues as work is still in progress. For the best experience, it is recommended to run the frontend and backend locally from the repository.
+> **Note:** The live deployment may have some styling issues as work is still in progress. The news also don't load. For the best experience, it is recommended to run the frontend and backend locally from the repository.
 
 ---
 
