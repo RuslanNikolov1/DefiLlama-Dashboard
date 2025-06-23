@@ -20,7 +20,6 @@ A modern, full-featured DeFi dashboard built with React, Vite, TypeScript, and S
 - **Error Handling**: User-friendly error messages and loading skeletons for smooth UX.
 - **Testing**: Comprehensive unit and integration tests with high coverage.
 - **Backend API**: Node.js/Express backend for authentication and comments.
-- **Ready to Deploy**: Optimized for Vercel deployment.
 
 
 ## 📦 Tech Stack
@@ -89,16 +88,6 @@ npm run build
 ```bash
 npm run preview
 ```
-
----
-
-### Live Demo
-
-A live version of the frontend is deployed on Vercel:
-
-- **URL:** [https://defi-llama-dashboard-7yazyuxmq-ruslan-nikolovs-projects.vercel.app/](https://defi-llama-dashboard-7yazyuxmq-ruslan-nikolovs-projects.vercel.app/)
-
-> **Note:** The live deployment may have some styling issues as work is still in progress. The news also don't load. For the best experience, it is recommended to run the frontend and backend locally from the repository.
 
 ---
 
