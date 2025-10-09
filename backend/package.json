@@ -21,7 +21,8 @@
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.3"
+    "mongoose": "^7.0.3",
+    "vite": "^6.3.5"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -30,7 +31,6 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.15.11",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.0.3",
-    "vite": "^6.x.x"
+    "typescript": "^5.0.3"
   }
 }

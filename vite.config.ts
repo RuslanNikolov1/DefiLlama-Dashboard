@@ -1,11 +1,23 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    port: 5173,
+    strictPort: true,
+    hmr: {
+      overlay: false
+    },
+    proxy: {
+      '/api': 'http://localhost:3001',
+    },
+  },
   build: {
     outDir: 'dist',
-    chunkSizeWarningLimit: 1000, // optional: raise threshold for warnings
+    emptyOutDir: true,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -15,11 +27,12 @@ export default defineConfig({
           vendor: [
             'axios',
             'react-router-dom',
-            'classnames',
-            // add other big libs you see in node_modules
+            'framer-motion',
+            '@tanstack/react-query',
+            '@tanstack/react-table'
           ],
         },
       },
     },
-  },
-});
+  }
+})
