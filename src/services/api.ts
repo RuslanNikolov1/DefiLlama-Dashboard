@@ -1,7 +1,14 @@
 import axios from 'axios';
 
 function getApiUrl() {
-  return import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+  // Check if we're in production (Vercel deployment)
+  if (import.meta.env.PROD) {
+    // In production, use your Render backend URL
+    // Replace 'your-backend-name' with your actual Render service name
+    return import.meta.env.VITE_API_URL || 'https://your-backend-name.onrender.com/api';
+  }
+  // In development, use localhost
+  return 'http://localhost:3001/api';
 }
 const API_URL = getApiUrl();
 
