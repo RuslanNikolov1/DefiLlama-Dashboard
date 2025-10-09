@@ -1,6 +1,23 @@
 import axios from 'axios';
 
-const BASE_URL = '/api/news/defi-news'; // Now points to your backend
+function getApiUrl() {
+  // Always check for environment variable first
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // Fallback based on environment
+  if (import.meta.env.PROD) {
+    // In production, use your Render backend URL
+    return 'https://my-defillama-dashboard-backend.onrender.com/api';
+  }
+  
+  // In development, use localhost
+  return 'http://localhost:3001/api';
+}
+
+const API_URL = getApiUrl();
+const BASE_URL = `${API_URL}/news/defi-news`;
 
 export const fetchDeFiNews = async () => {
   const response = await axios.get(BASE_URL);
@@ -16,14 +33,14 @@ export const fetchDeFiNews = async () => {
 };
 
 export const fetchComments = async (newsId: string) => {
-  const response = await axios.get(`/api/news/${newsId}/comments`);
+  const response = await axios.get(`${API_URL}/news/${newsId}/comments`);
   return response.data;
 };
 
 export const postComment = async (newsId: string, text: string) => {
   const token = localStorage.getItem('auth_token');
   const response = await axios.post(
-    `/api/news/${newsId}/comments`,
+    `${API_URL}/news/${newsId}/comments`,
     { text },
     {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
