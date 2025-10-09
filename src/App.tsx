@@ -4,6 +4,7 @@ import styles from './App.module.scss';
 import Footer from './components/Footer/Footer';
 import { AnimatePresence, motion } from 'framer-motion';
 import { TableSkeleton } from './components/Skeletons/Skeletons';
+import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 import { ThemeProvider } from './context/ThemeContext';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import './styles/themes.scss';
@@ -12,12 +13,11 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute/ProtectedRoute'
 import { Header } from './components/layout/Header/Header';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
-import CoinsTable from './components/CoinsTable/CoinsTable';
-import CoinDetailPage from './components/CoinsTable/CoinDetailPage';
+// Lazy load all components for better performance
+const CoinsTable = React.lazy(() => import('./components/CoinsTable/CoinsTable'));
+const CoinDetailPage = React.lazy(() => import('./components/CoinsTable/CoinDetailPage'));
 const DeFiNews = React.lazy(() => import('./components/DeFiNews/DeFiNews'));
 const NewsDetail = React.lazy(() => import('./components/NewsDetail/NewsDetail'));
-
-// Lazy load components
 const ProtocolsTable = React.lazy(() => import('./components/ProtocolsTable/ProtocolsTable'));
 const TVLChart = React.lazy(() => import('./components/TVLChart/TVLChart'));
 const StablecoinChart = React.lazy(() => import('./components/StablecoinChart/StablecoinChart'));
@@ -104,14 +104,18 @@ function App() {
                     </Suspense>
                   </motion.div>
                 } />
-                <Route path="/coin/:id" element={<CoinDetailPage />} />
+                <Route path="/coin/:id" element={
+                  <Suspense fallback={<LoadingSpinner message="Loading coin details..." />}>
+                    <CoinDetailPage />
+                  </Suspense>
+                } />
                 <Route path="/news" element={
-                  <Suspense fallback={<div>Loading DeFi news...</div>}>
+                  <Suspense fallback={<LoadingSpinner message="Loading DeFi news..." />}>
                     <DeFiNews />
                   </Suspense>
                 } />
                 <Route path="/news/:id" element={
-                  <Suspense fallback={<div>Loading news detail...</div>}>
+                  <Suspense fallback={<LoadingSpinner message="Loading news detail..." />}>
                     <NewsDetail />
                   </Suspense>
                 } />
@@ -124,7 +128,7 @@ function App() {
                     role="region"
                     aria-label="Stablecoins chart"
                   >
-                    <Suspense fallback={<div role="status" aria-live="polite">Loading stablecoins data...</div>}>
+                    <Suspense fallback={<LoadingSpinner message="Loading stablecoins data..." />}>
                       <StablecoinChart />
                     </Suspense>
                   </motion.div>
@@ -138,7 +142,7 @@ function App() {
                     role="region"
                     aria-label="Percentage yield chart"
                   >
-                    <Suspense fallback={<div role="status" aria-live="polite">Loading percentage yield data...</div>}>
+                    <Suspense fallback={<LoadingSpinner message="Loading percentage yield data..." />}>
                       <AveragePercentageYieldChart />
                     </Suspense>
                   </motion.div>
@@ -152,7 +156,7 @@ function App() {
                     role="region"
                     aria-label="TVL chart"
                   >
-                    <Suspense fallback={<div role="status" aria-live="polite">Loading TVL data...</div>}>
+                    <Suspense fallback={<LoadingSpinner message="Loading TVL data..." />}>
                       <TVLChart />
                     </Suspense>
                   </motion.div>
