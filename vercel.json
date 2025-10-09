@@ -1,6 +1,5 @@
 {
   "framework": "vite",
-  "installCommand": "npm ci",
-  "buildCommand": "npm run build && ls -la dist",
+  "buildCommand": "npm ci && npm run build",
   "outputDirectory": "dist"
 }
