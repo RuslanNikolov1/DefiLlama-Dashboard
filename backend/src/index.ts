@@ -170,17 +170,22 @@ app.get('/api/coins/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { localization = 'false', tickers = 'true', market_data = 'true', community_data = 'true', developer_data = 'true', sparkline = 'false' } = req.query;
-    
-    const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}?localization=${localization}&tickers=${tickers}&market_data=${market_data}&community_data=${community_data}&developer_data=${developer_data}&sparkline=${sparkline}`;
-    
-    const response = await axios.get(coinGeckoUrl, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
+
+    const cacheKey = `coin-${id}-${localization}-${tickers}-${market_data}-${community_data}-${developer_data}-${sparkline}`;
+
+    const data = await getCachedData(cacheKey, async () => {
+      const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}?localization=${localization}&tickers=${tickers}&market_data=${market_data}&community_data=${community_data}&developer_data=${developer_data}&sparkline=${sparkline}`;
+
+      const response = await axios.get(coinGeckoUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      });
+      return response.data;
     });
-    
-    res.json(response.data);
+
+    res.json(data);
   } catch (error) {
     // For coin detail, we'll return a generic error since we don't have specific fallback data
     handleAxiosError(error, res, 'Failed to fetch coin detail data');
@@ -192,19 +197,24 @@ app.get('/api/coins/:id/market_chart', async (req, res) => {
   try {
     const { id } = req.params;
     const { vs_currency = 'usd', days = '90' } = req.query;
-    
-    const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${vs_currency}&days=${days}`;
-    
-    const response = await axios.get(coinGeckoUrl, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
+
+    const cacheKey = `market_chart-${id}-${vs_currency}-${days}`;
+
+    const data = await getCachedData(cacheKey, async () => {
+      const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${vs_currency}&days=${days}`;
+
+      const response = await axios.get(coinGeckoUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      });
+      return response.data;
     });
-    
-    res.json(response.data);
+
+    res.json(data);
   } catch (error) {
-    handleAxiosError(error, res, 'Failed to fetch market chart data');
+    handleAxiosError(error, res, 'Failed to fetch market chart data', { prices: [], market_caps: [], total_volumes: [] });
   }
 });
 
@@ -213,19 +223,24 @@ app.get('/api/coins/:id/tickers', async (req, res) => {
   try {
     const { id } = req.params;
     const { include_exchange_logo = 'true' } = req.query;
-    
-    const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}/tickers?include_exchange_logo=${include_exchange_logo}`;
-    
-    const response = await axios.get(coinGeckoUrl, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
+
+    const cacheKey = `tickers-${id}-${include_exchange_logo}`;
+
+    const data = await getCachedData(cacheKey, async () => {
+      const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}/tickers?include_exchange_logo=${include_exchange_logo}`;
+
+      const response = await axios.get(coinGeckoUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      });
+      return response.data;
     });
-    
-    res.json(response.data);
+
+    res.json(data);
   } catch (error) {
-    handleAxiosError(error, res, 'Failed to fetch tickers data');
+    handleAxiosError(error, res, 'Failed to fetch tickers data', { tickers: [] });
   }
 });
 
