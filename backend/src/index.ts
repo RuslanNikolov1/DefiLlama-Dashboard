@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import axios from 'axios';
 import connectDB from './config/database';
 import authRoutes from './routes/authRoutes';
 import newsRoutes from './routes/newsRoutes';
@@ -11,12 +12,37 @@ dotenv.config();
 // Create Express app
 const app = express();
 
+// Configure axios defaults
+axios.defaults.timeout = 10000; // 10 seconds timeout
+axios.defaults.headers.common['User-Agent'] = 'DefiLlama-Dashboard/1.0.0';
+
+// Helper function to handle axios errors
+const handleAxiosError = (error: unknown, res: express.Response, defaultMessage: string) => {
+  console.error('API proxy error:', error);
+  if (axios.isAxiosError(error)) {
+    const status = error.response?.status || 500;
+    const message = error.response?.data?.error || error.message || defaultMessage;
+    res.status(status).json({ error: message });
+  } else {
+    res.status(500).json({ error: defaultMessage });
+  }
+};
+
 // Connect to MongoDB
 connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -29,22 +55,16 @@ app.get('/api/coins', async (req, res) => {
     
     const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs_currency}&order=${order}&per_page=${per_page}&page=${page}&sparkline=${sparkline}`;
     
-    const response = await fetch(coinGeckoUrl, {
+    const response = await axios.get(coinGeckoUrl, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
     
-    if (!response.ok) {
-      throw new Error(`CoinGecko API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
-    console.error('CoinGecko API proxy error:', error);
-    res.status(500).json({ error: 'Failed to fetch coins data' });
+    handleAxiosError(error, res, 'Failed to fetch coins data');
   }
 });
 
@@ -56,22 +76,16 @@ app.get('/api/coins/:id', async (req, res) => {
     
     const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}?localization=${localization}&tickers=${tickers}&market_data=${market_data}&community_data=${community_data}&developer_data=${developer_data}&sparkline=${sparkline}`;
     
-    const response = await fetch(coinGeckoUrl, {
+    const response = await axios.get(coinGeckoUrl, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
     
-    if (!response.ok) {
-      throw new Error(`CoinGecko API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
-    console.error('CoinGecko API proxy error:', error);
-    res.status(500).json({ error: 'Failed to fetch coin detail data' });
+    handleAxiosError(error, res, 'Failed to fetch coin detail data');
   }
 });
 
@@ -83,22 +97,16 @@ app.get('/api/coins/:id/market_chart', async (req, res) => {
     
     const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${vs_currency}&days=${days}`;
     
-    const response = await fetch(coinGeckoUrl, {
+    const response = await axios.get(coinGeckoUrl, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
     
-    if (!response.ok) {
-      throw new Error(`CoinGecko API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
-    console.error('CoinGecko API proxy error:', error);
-    res.status(500).json({ error: 'Failed to fetch market chart data' });
+    handleAxiosError(error, res, 'Failed to fetch market chart data');
   }
 });
 
@@ -110,109 +118,79 @@ app.get('/api/coins/:id/tickers', async (req, res) => {
     
     const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/${id}/tickers?include_exchange_logo=${include_exchange_logo}`;
     
-    const response = await fetch(coinGeckoUrl, {
+    const response = await axios.get(coinGeckoUrl, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
     
-    if (!response.ok) {
-      throw new Error(`CoinGecko API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
-    console.error('CoinGecko API proxy error:', error);
-    res.status(500).json({ error: 'Failed to fetch tickers data' });
+    handleAxiosError(error, res, 'Failed to fetch tickers data');
   }
 });
 
 // DefiLlama API proxy routes
 app.get('/api/llama/charts', async (req, res) => {
   try {
-    const response = await fetch('https://api.llama.fi/charts', {
+    const response = await axios.get('https://api.llama.fi/charts', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
     
-    if (!response.ok) {
-      throw new Error(`DefiLlama API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
-    console.error('DefiLlama API proxy error:', error);
-    res.status(500).json({ error: 'Failed to fetch TVL charts data' });
+    handleAxiosError(error, res, 'Failed to fetch TVL charts data');
   }
 });
 
 app.get('/api/llama/protocols', async (req, res) => {
   try {
-    const response = await fetch('https://api.llama.fi/protocols', {
+    const response = await axios.get('https://api.llama.fi/protocols', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
     
-    if (!response.ok) {
-      throw new Error(`DefiLlama API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
-    console.error('DefiLlama API proxy error:', error);
-    res.status(500).json({ error: 'Failed to fetch protocols data' });
+    handleAxiosError(error, res, 'Failed to fetch protocols data');
   }
 });
 
 // DefiLlama Yields API proxy route
 app.get('/api/llama/yields/pools', async (req, res) => {
   try {
-    const response = await fetch('https://yields.llama.fi/pools', {
+    const response = await axios.get('https://yields.llama.fi/pools', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
     
-    if (!response.ok) {
-      throw new Error(`DefiLlama Yields API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
-    console.error('DefiLlama Yields API proxy error:', error);
-    res.status(500).json({ error: 'Failed to fetch yields data' });
+    handleAxiosError(error, res, 'Failed to fetch yields data');
   }
 });
 
 // DefiLlama Stablecoins API proxy route
 app.get('/api/llama/stablecoins/charts', async (req, res) => {
   try {
-    const response = await fetch('https://stablecoins.llama.fi/stablecoincharts/all', {
+    const response = await axios.get('https://stablecoins.llama.fi/stablecoincharts/all', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
     
-    if (!response.ok) {
-      throw new Error(`DefiLlama Stablecoins API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
-    console.error('DefiLlama Stablecoins API proxy error:', error);
-    res.status(500).json({ error: 'Failed to fetch stablecoin data' });
+    handleAxiosError(error, res, 'Failed to fetch stablecoin data');
   }
 });
 
