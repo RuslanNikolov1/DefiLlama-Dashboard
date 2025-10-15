@@ -18,7 +18,31 @@ axios.defaults.headers.common['User-Agent'] = 'DefiLlama-Dashboard/1.0.0';
 
 // Simple in-memory cache
 const cache = new Map<string, { data: any; timestamp: number }>();
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes (increased from 5)
+
+// Fallback data for when CoinGecko API is rate-limited
+const FALLBACK_COINS_DATA = [
+  {
+    id: "bitcoin",
+    symbol: "btc",
+    name: "Bitcoin",
+    image: "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png",
+    current_price: 110000,
+    market_cap: 2200000000000,
+    market_cap_rank: 1,
+    price_change_percentage_24h: 2.5
+  },
+  {
+    id: "ethereum",
+    symbol: "eth", 
+    name: "Ethereum",
+    image: "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png",
+    current_price: 3500,
+    market_cap: 420000000000,
+    market_cap_rank: 2,
+    price_change_percentage_24h: 1.8
+  }
+];
 
 // Rate limiting
 const requestCounts = new Map<string, { count: number; resetTime: number }>();
@@ -62,8 +86,8 @@ const getCachedData = async (key: string, fetchFunction: () => Promise<any>) => 
   return data;
 };
 
-// Helper function to handle axios errors
-const handleAxiosError = (error: unknown, res: express.Response, defaultMessage: string) => {
+// Helper function to handle axios errors with fallback data
+const handleAxiosError = (error: unknown, res: express.Response, defaultMessage: string, fallbackData?: any) => {
   console.error('API proxy error:', error);
   if (axios.isAxiosError(error)) {
     const status = error.response?.status || 500;
@@ -71,6 +95,11 @@ const handleAxiosError = (error: unknown, res: express.Response, defaultMessage:
     
     // Handle specific error cases
     if (status === 429) {
+      console.log('Rate limit exceeded, using fallback data');
+      if (fallbackData) {
+        res.json(fallbackData);
+        return;
+      }
       message = 'CoinGecko API rate limit exceeded. Please try again later.';
       res.status(429).json({ 
         error: message,
@@ -132,7 +161,7 @@ app.get('/api/coins', async (req, res) => {
     
     res.json(data);
   } catch (error) {
-    handleAxiosError(error, res, 'Failed to fetch coins data');
+    handleAxiosError(error, res, 'Failed to fetch coins data', FALLBACK_COINS_DATA);
   }
 });
 
@@ -153,6 +182,7 @@ app.get('/api/coins/:id', async (req, res) => {
     
     res.json(response.data);
   } catch (error) {
+    // For coin detail, we'll return a generic error since we don't have specific fallback data
     handleAxiosError(error, res, 'Failed to fetch coin detail data');
   }
 });
