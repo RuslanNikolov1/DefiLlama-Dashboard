@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from '../services/api';
 
 /**
  * Interface representing a single borrow rate entry.
@@ -22,8 +22,8 @@ export const useAveragePercentageYield = () => {
     return useQuery<PercentageRateEntry[]>({
         queryKey: ['averagePercentageYield'],
         queryFn: async () => {
-            const res = await axios.get('https://yields.llama.fi/pools');
-            return res.data.data.map((entry: any) => ({
+            const response = await api.get('/llama/yields/pools');
+            return response.data.data.map((entry: any) => ({
                 symbol: entry.symbol,
                 percentage: entry.apyMean30d ?? 0,
             })).slice(0, 100);

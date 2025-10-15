@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from '../services/api';
 
 /**
  * Interface representing a single data point in the TVL chart.
@@ -20,8 +20,8 @@ export const useTVLData = () => {
   return useQuery<TVLDataPoint[]>({
     queryKey: ['tvlData'],
     queryFn: async () => {
-      const res = await axios.get('https://api.llama.fi/charts');
-      return res.data;
+      const response = await api.get('/llama/charts');
+      return response.data;
     },
   });
 };

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from '../services/api';
 
 /**
  * Custom hook to fetch tabular data from the DeFiLlama API.
@@ -16,8 +16,8 @@ export const useProtocols = () => {
   return useQuery<Protocol[]>({
     queryKey: ['protocols'],
     queryFn: async () => {
-      const res = await axios.get('https://api.llama.fi/protocols');
-      return res.data;
+      const response = await api.get('/llama/protocols');
+      return response.data;
     },
   });
 };

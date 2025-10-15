@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from '../services/api';
 
 /**
  * Interface representing a single data point for stablecoin circulating supply.
@@ -20,8 +20,8 @@ export const useStablecoinData = () => {
   return useQuery<StablecoinEntry[]>({
     queryKey: ['stablecoinData'],
     queryFn: async () => {
-      const res = await axios.get('https://stablecoins.llama.fi/stablecoincharts/all');
-      return res.data.map((point: any) => ({
+      const response = await api.get('/llama/stablecoins/charts');
+      return response.data.map((point: any) => ({
         date: point.date,
         circulating: point.totalCirculating.peggedUSD
       }));

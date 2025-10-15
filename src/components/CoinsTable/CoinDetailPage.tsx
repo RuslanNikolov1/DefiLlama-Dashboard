@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import api from '../../services/api';
 import styles from './CoinDetailPage.module.scss';
 
 interface Coin {
@@ -71,15 +72,9 @@ const CoinDetailPage: React.FC = () => {
     setLoading(true);
     setError(null);
     Promise.all([
-      fetch(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=false`, {
-        headers: apiKey ? { 'x-cg-pro-api-key': apiKey } : undefined
-      }).then(r => r.json()),
-      fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=90`, {
-        headers: apiKey ? { 'x-cg-pro-api-key': apiKey } : undefined
-      }).then(r => r.json()),
-      fetch(`https://api.coingecko.com/api/v3/coins/${id}/tickers?include_exchange_logo=true`, {
-        headers: apiKey ? { 'x-cg-pro-api-key': apiKey } : undefined
-      }).then(r => r.json()),
+      api.get(`/coins/${id}?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=false`).then(r => r.data),
+      api.get(`/coins/${id}/market_chart?vs_currency=usd&days=90`).then(r => r.data),
+      api.get(`/coins/${id}/tickers?include_exchange_logo=true`).then(r => r.data),
     ])
       .then(([coinData, chartData, marketsData]) => {
         setCoin(coinData);
